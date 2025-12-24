@@ -38,6 +38,11 @@ const artists = [
       { type: 'Портрет (голова)', price: '3000₽' },
       { type: 'Полный рост', price: '5000₽' },
       { type: 'Детальный фон', price: '8000₽' },
+    ],
+    reviews: [
+      { id: 1, author: 'Алексей М.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex', rating: 5, date: '15.12.2024', text: 'Потрясающая работа! Мария нарисовала моего фурри-персонажа лучше, чем я мог представить. Детализация на высоте, сроки соблюдены. Однозначно рекомендую!' },
+      { id: 2, author: 'Катерина В.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Kate', rating: 5, date: '10.12.2024', text: 'Профессионал своего дела! Очень отзывчивая, учла все пожелания. Результат превзошёл ожидания 🎨' },
+      { id: 3, author: 'Денис К.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Denis', rating: 4, date: '05.12.2024', text: 'Хорошая работа, но пришлось немного подождать из-за очереди. В остальном всё отлично!' },
     ]
   },
   {
@@ -56,6 +61,10 @@ const artists = [
     priceList: [
       { type: 'Портрет питомца', price: '2000₽' },
       { type: 'Фурри персонаж', price: '4000₽' },
+    ],
+    reviews: [
+      { id: 1, author: 'Ольга С.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Olga', rating: 5, date: '18.12.2024', text: 'Артём нарисовал портрет моего кота в стиле фэнтези — просто волшебно! Спасибо 🐾' },
+      { id: 2, author: 'Игорь Л.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Igor', rating: 4, date: '12.12.2024', text: 'Качественно, быстро, адекватная цена. Небольшие правки сделал оперативно.' },
     ]
   },
   {
@@ -74,6 +83,10 @@ const artists = [
     priceList: [
       { type: 'Быстрый скетч', price: '1500₽' },
       { type: 'Детальный портрет', price: '3000₽' },
+    ],
+    reviews: [
+      { id: 1, author: 'Мария П.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Maria', rating: 5, date: '20.12.2024', text: 'Отличные скетчи! Катя очень быстро работает, цены приятные. Буду заказывать ещё!' },
+      { id: 2, author: 'Антон Р.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Anton', rating: 4, date: '14.12.2024', text: 'Хороший стиль, понравилось. Для своей цены — супер вариант.' },
     ]
   },
 ];
@@ -297,9 +310,10 @@ export default function Index() {
                           </div>
 
                           <Tabs defaultValue="portfolio" className="w-full">
-                            <TabsList className="grid w-full grid-cols-3">
+                            <TabsList className="grid w-full grid-cols-4">
                               <TabsTrigger value="portfolio">Портфолио</TabsTrigger>
                               <TabsTrigger value="prices">Прайс-лист</TabsTrigger>
+                              <TabsTrigger value="reviews">Отзывы</TabsTrigger>
                               <TabsTrigger value="order">Заказать</TabsTrigger>
                             </TabsList>
                             
@@ -331,6 +345,53 @@ export default function Index() {
                                   </div>
                                 ))}
                               </div>
+                            </TabsContent>
+                            
+                            <TabsContent value="reviews" className="space-y-4">
+                              <div className="flex items-center justify-between mb-4">
+                                <h3 className="font-bold text-lg">Отзывы клиентов</h3>
+                                <div className="flex items-center gap-2">
+                                  <Icon name="Star" size={20} className="text-yellow-500 fill-yellow-500" />
+                                  <span className="font-bold text-xl">{selectedArtist.rating}</span>
+                                  <span className="text-gray-500 text-sm">({selectedArtist.reviews.length} отзывов)</span>
+                                </div>
+                              </div>
+                              <div className="space-y-4">
+                                {selectedArtist.reviews.map((review) => (
+                                  <div 
+                                    key={review.id} 
+                                    className="p-4 rounded-xl gradient-card border border-purple-100 space-y-3"
+                                  >
+                                    <div className="flex items-start gap-3">
+                                      <Avatar className="w-10 h-10">
+                                        <AvatarImage src={review.avatar} alt={review.author} />
+                                        <AvatarFallback>{review.author[0]}</AvatarFallback>
+                                      </Avatar>
+                                      <div className="flex-1">
+                                        <div className="flex items-center justify-between">
+                                          <h4 className="font-semibold">{review.author}</h4>
+                                          <span className="text-xs text-gray-500">{review.date}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1 mt-1">
+                                          {[...Array(5)].map((_, i) => (
+                                            <Icon 
+                                              key={i} 
+                                              name="Star" 
+                                              size={14} 
+                                              className={i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}
+                                            />
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <p className="text-gray-700 text-sm leading-relaxed">{review.text}</p>
+                                  </div>
+                                ))}
+                              </div>
+                              <Button variant="outline" className="w-full mt-4">
+                                <Icon name="MessageSquare" size={18} className="mr-2" />
+                                Оставить отзыв
+                              </Button>
                             </TabsContent>
                             
                             <TabsContent value="order" className="space-y-4">
