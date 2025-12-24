@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -99,6 +100,7 @@ const skillLabels = {
 };
 
 export default function Index() {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedSkill, setSelectedSkill] = useState<string>('all');
   const [selectedArtist, setSelectedArtist] = useState<typeof artists[0] | null>(null);
@@ -129,6 +131,10 @@ export default function Index() {
           </nav>
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm">Войти</Button>
+            <Button size="sm" variant="outline" onClick={() => navigate('/dashboard')}>
+              <Icon name="LayoutDashboard" size={16} className="mr-2" />
+              Кабинет художника
+            </Button>
             <Button size="sm" className="gradient-primary text-white">Регистрация</Button>
           </div>
         </div>
