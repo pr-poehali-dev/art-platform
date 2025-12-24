@@ -135,7 +135,7 @@ export default function Index() {
               <Icon name="LayoutDashboard" size={16} className="mr-2" />
               Кабинет художника
             </Button>
-            <Button size="sm" className="gradient-primary text-white">Регистрация</Button>
+            <Button size="sm" className="gradient-primary text-white" onClick={() => navigate('/register')}>Регистрация</Button>
           </div>
         </div>
       </header>

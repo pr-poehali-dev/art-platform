@@ -348,7 +348,7 @@ export default function ArtistDashboard() {
                                         <p className="text-sm text-blue-700 mb-3">
                                           У вас {selectedOrder.messages} сообщений в этом заказе
                                         </p>
-                                        <Button size="sm" variant="outline" className="border-blue-300">
+                                        <Button size="sm" variant="outline" className="border-blue-300" onClick={() => navigate('/chat')}>
                                           Открыть чат
                                         </Button>
                                       </div>
@@ -358,7 +358,7 @@ export default function ArtistDashboard() {
                               )}
                             </DialogContent>
                           </Dialog>
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" onClick={() => navigate('/chat')}>
                             <Icon name="MessageCircle" size={16} className="mr-2" />
                             Чат ({order.messages})
                           </Button>
